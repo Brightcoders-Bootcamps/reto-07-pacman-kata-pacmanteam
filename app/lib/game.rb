@@ -1,4 +1,7 @@
 # frozen_string_literal: true
+require_relative "pacman"
+require_relative "ghost"
+require_relative "board"
 
 # This class is a core
 # - Contains pacman, ghost and board
@@ -12,7 +15,7 @@ class Game
     def initialize(arguments)
       @board = Board.new
       @pacman = Pacman.new(@board)
-      @ghosts = Array.new(){ |Ghost.new(@board)| }
+      @ghosts = Array.new()
       
     end
   
