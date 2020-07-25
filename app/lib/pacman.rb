@@ -9,22 +9,13 @@ require_relative "character"
 # pacman characters
 # <>∨∧
 class Pacman < Character
-    def initialize(args)
-      # parent.initialize(args)
-    end
-  
-    def capture_direction
-      # this method must be executed in a thread for capture
-      # the direction for pacman 
-      while 1 do
-        aux = gets.chomp
-        if aux = 
-        
-      end
-    end
-  
-    def calculate_movement
-      # depending for the direction defined by the user, this
-      # method must be calculate the direction from the board
-    end
+  def initialize(args)
+    super(args)
+    @position[:x] = 21
+    @position[:y] = 2
   end
+
+  def calculate_movement
+  	super(1)  	
+  end
+end
