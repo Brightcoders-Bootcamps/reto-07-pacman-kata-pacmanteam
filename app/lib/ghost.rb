@@ -13,6 +13,7 @@ class Ghost < Character
     super(args)
     @position[:x] = 11
     @position[:y] = 39
+    @character = "∏"
   end
 
   def calculate_movement(pacman_position)
@@ -20,16 +21,16 @@ class Ghost < Character
     if (@position[:x] - pacman_position[:x]) >= 0
       @direction = 1
     # right
-    elsif (@position[:x] - pacman_position[:x]) <= 0
+    else 
       @direction = 2
     # top
-    elsif (@position[:y] - pacman_position[:y]) <= 0
+    end
+    if (@position[:y] - pacman_position[:y]) <= 0
       @direction = 3
     # bottom
     else
       @direction = 4
     end
-
 		super(0)
 	end
 end

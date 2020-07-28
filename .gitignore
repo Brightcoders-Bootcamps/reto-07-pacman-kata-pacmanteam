@@ -1,2 +1,3 @@
 .bundle
-tmp
+/tmp
+!/tmp/sandi_meter

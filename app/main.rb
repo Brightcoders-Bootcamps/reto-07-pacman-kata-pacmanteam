@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# frozen_string_literal: false
 
 #                          tablero
 #                            ||     enviar escenario, imprime el tablero
@@ -10,14 +10,17 @@
 #                           /\
 #                           ||  hereda a
 #                         character
+require 'timeout'
 require_relative "lib/game"
 
 game = Game.new(ENV["PWD"] + "/app/stage.txt")
 
-controls = Thread.new{ game.capture_direction }
-ghosts = Thread.new{ game.ghost_appear }
-gexe = Thread.new{ game.game }
+ghosts = Thread.new { game.ghost_appear }
+capture = Thread.new { game.capture_direction }
+board = Thread.new {game.game}
+
 gets.chomp
-Thread.kill(controls)
+
 Thread.kill(ghosts)
-Thread.kill(gexe)
+Thread.kill(capture)
+Thread.kill(board)

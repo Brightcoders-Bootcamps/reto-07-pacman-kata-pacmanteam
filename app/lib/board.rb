@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative 'helper_functions'
+
 # This class most be 
 #   - Print the board
 #   - Send data to pacman and ghosts to calculate the next movement
@@ -9,36 +11,43 @@
 # ● -> power
 # ■ -> wall
 class Board
-  attr_accessor :board, :board_numeric
+  attr_reader :board, :board_numeric, :ghosts, :pacman
 
   def initialize(file)
-    File.open(file, "r") do |stream|
-      stream = stream.to_a
-      @board = Array.new(stream.size){ Array.new() }
-      @board_numeric = Array.new(stream.size){ Array.new() }
-      stream.each_with_index do |element, index|
-        for i in 0...(element.size - 1)
-          case element[i]
-          when "■" then aux = 0
-          when " " then aux = 1
-          when "·" then aux = 2
-          when "●" then aux = 3
-          end
-          @board[index] << element[i]
-          @board_numeric[index] << aux
-        end
+    @pacman = nil
+    @ghosts = nil
+    @board = Array.new() 
+    @board_numeric = Array.new()
+    steam = File.open(file)
+    open_file(steam.to_a)
+  end
+
+  def print_b
+    @board.each_with_index do |ren, index_i|
+      ren.each_with_index do |cols, index_j|
+        @ghosts.map{ |ghost| cols = helper_print_b_character(ghost, cols, [index_i, index_j]) }
+        cols = helper_print_b_character(@pacman, cols, [index_i, index_j])
+        print cols
       end
+      print "\n\r"
     end
   end
 
-  def print_b(characters)
-    @board.each_with_index do |ren, index_i|
-      ren.each_with_index do |cols, index_j|
-        characters.each do |char|
-          print ([index_i,index_j] == char[0]) ? "#{char[1]}" : "#{cols}"
-        end
-      end
-      print "\n\r"
+  private  
+
+  def open_file(stream)
+    stream.each_with_index do |element, pointer|
+      @board_numeric << Array.new()
+      @board << Array.new()
+      convert_file_stream(element, pointer)
+    end
+  end
+
+  def convert_file_stream(element, pointer)
+    (0..element.size - 2).each do |elem|
+      charac = element[elem]
+      @board[pointer] << charac
+      @board_numeric[pointer] << helper_find_numeric(charac, 0)
     end
   end
 end
