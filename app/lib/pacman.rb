@@ -11,19 +11,25 @@ require_relative "helper_functions"
 class Pacman < Character
   def initialize(args)
     super(args)
-    @position[:x] = 21
+    @position[:x] = 14
     @position[:y] = 2
     @direction = 1
     @character = "<"
   end
 
   def calculate_movement
-    @character = case @direction
-    when 3 then "<"
-    when 4 then ">"
-    when 1 then "∨"
-    when 2 then "∧"
-    end
+    @character = toogle_character
   	super(1)  	
+  end
+
+  private 
+
+  def toogle_character
+    case @direction
+    when 1 then ('∨' == @character) ? '|' : '∨'
+    when 2 then ('∧' == @character) ? '|' : '∧'
+    when 3 then ('<' == @character) ? '-' : '<'
+    when 4 then ('>' == @character) ? '-' : '>'
+    end
   end
 end

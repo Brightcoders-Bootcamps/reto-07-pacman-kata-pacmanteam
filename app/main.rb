@@ -13,7 +13,7 @@
 require 'timeout'
 require_relative "lib/game"
 
-game = Game.new(ENV["PWD"] + "/app/stage.txt")
+game = Game.new(ENV["PWD"] + "/app/stage1.txt")
 
 ghosts = Thread.new { game.ghost_appear }
 capture = Thread.new { game.capture_direction }

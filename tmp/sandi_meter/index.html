@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sandi Chart</title>
+  <link rel="stylesheet" href="assets/normalize.css">
+  <link rel="stylesheet" href="assets/morris.css">
+  <link rel="stylesheet" href="assets/style.css">
+  <script src="assets/jquery.js"></script>
+  <script src="assets/chart.js"></script>
+  <script src="assets/script.js"></script>
+  <script type="text/javascript">
+    var data = [{"r10":0,"r11":0,"r20":0,"r21":0,"r30":0,"r31":0,"r40":0,"r41":0,"timestamp":1595290275000},{"r10":5,"r11":0,"r20":5,"r21":7,"r30":71,"r31":0,"r40":0,"r41":0,"timestamp":1595632314000},{"r10":5,"r11":0,"r20":5,"r21":7,"r30":70,"r31":0,"r40":0,"r41":0,"timestamp":1595632602000},{"r10":5,"r11":0,"r20":4,"r21":8,"r30":70,"r31":0,"r40":0,"r41":0,"timestamp":1595632935000},{"r10":5,"r11":0,"r20":4,"r21":8,"r30":56,"r31":0,"r40":0,"r41":0,"timestamp":1595633395000},{"r10":5,"r11":0,"r20":4,"r21":8,"r30":48,"r31":0,"r40":0,"r41":0,"timestamp":1595633660000},{"r10":5,"r11":0,"r20":4,"r21":8,"r30":51,"r31":0,"r40":0,"r41":0,"timestamp":1595635817000},{"r10":5,"r11":0,"r20":4,"r21":8,"r30":51,"r31":0,"r40":0,"r41":0,"timestamp":1595635941000},{"r10":5,"r11":0,"r20":4,"r21":8,"r30":51,"r31":0,"r40":0,"r41":0,"timestamp":1595636721000},{"r10":5,"r11":0,"r20":4,"r21":8,"r30":51,"r31":0,"r40":0,"r41":0,"timestamp":1595636740000},{"r10":5,"r11":0,"r20":4,"r21":8,"r30":48,"r31":0,"r40":0,"r41":0,"timestamp":1595636820000},{"r10":5,"r11":0,"r20":4,"r21":8,"r30":48,"r31":0,"r40":0,"r41":0,"timestamp":1595636916000},{"r10":5,"r11":0,"r20":4,"r21":8,"r30":52,"r31":0,"r40":0,"r41":0,"timestamp":1595637964000},{"r10":5,"r11":0,"r20":4,"r21":8,"r30":52,"r31":0,"r40":0,"r41":0,"timestamp":1595637977000},{"r10":5,"r11":0,"r20":4,"r21":8,"r30":52,"r31":0,"r40":0,"r41":0,"timestamp":1595638132000},{"r10":5,"r11":0,"r20":4,"r21":8,"r30":52,"r31":0,"r40":0,"r41":0,"timestamp":1595638157000},{"r10":5,"r11":0,"r20":4,"r21":8,"r30":52,"r31":0,"r40":0,"r41":0,"timestamp":1595638438000},{"r10":5,"r11":0,"r20":5,"r21":8,"r30":53,"r31":0,"r40":0,"r41":0,"timestamp":1595639394000},{"r10":5,"r11":0,"r20":5,"r21":8,"r30":51,"r31":0,"r40":0,"r41":0,"timestamp":1595640059000},{"r10":5,"r11":0,"r20":5,"r21":8,"r30":47,"r31":0,"r40":0,"r41":0,"timestamp":1595640123000},{"r10":5,"r11":0,"r20":5,"r21":8,"r30":52,"r31":0,"r40":0,"r41":0,"timestamp":1595867024000},{"r10":5,"r11":0,"r20":5,"r21":8,"r30":52,"r31":0,"r40":0,"r41":0,"timestamp":1595867093000},{"r10":5,"r11":0,"r20":5,"r21":8,"r30":49,"r31":0,"r40":0,"r41":0,"timestamp":1595867276000},{"r10":5,"r11":0,"r20":5,"r21":8,"r30":49,"r31":0,"r40":0,"r41":0,"timestamp":1595867421000},{"r10":5,"r11":0,"r20":5,"r21":8,"r30":50,"r31":0,"r40":0,"r41":0,"timestamp":1595867601000},{"r10":5,"r11":0,"r20":5,"r21":8,"r30":62,"r31":0,"r40":0,"r41":0,"timestamp":1595867842000},{"r10":5,"r11":0,"r20":6,"r21":9,"r30":47,"r31":0,"r40":0,"r41":0,"timestamp":1595899992000},{"r10":5,"r11":0,"r20":5,"r21":9,"r30":85,"r31":0,"r40":0,"r41":0,"timestamp":1596163291000},{"r10":5,"r11":0,"r20":5,"r21":9,"r30":71,"r31":0,"r40":0,"r41":0,"timestamp":1596164025000}];
+  </script>
+</head>
+<body>
+  <a href="https://github.com/makaroni4/sandi_meter"><img style="position: absolute; top: 0; left: 0; border: 0;" src="assets/forkme.png" alt="Fork me on GitHub"></a>
+  <div class="container">
+    <header>
+      <h1 class="main-title">Sandi Metz rules</h1>
+      <h2 class="main-description js-report-date"></h2>
+    </header>
+    <section class="pie-charts">
+      <div id="pie1" class="pie-charts-item"></div>
+      <div id="pie2" class="pie-charts-item"></div>
+      <div id="pie3" class="pie-charts-item"></div>
+      <div id="pie4" class="pie-charts-item"></div>
+      <div class="clearfix"></div>
+    </section>
+    <nav class="main-menu">
+      <a href="#" class="main-menu-active js-menu-item" data-rel=".js-charts">Rules</a>
+      <a href="#" class="js-menu-item" data-rel=".js-charts-percentage">Rules %</a>
+      <a href="#" class="js-menu-item" data-rel=".js-progress">Progress %</a>
+      <a href="#" class="js-menu-item" data-rel=".js-details">Details</a>
+    </nav>
+    <section class="plot-charts js-charts js-tab-item">
+      <div class="plot-charts-item">
+        <div class="plot-charts-item-caption">Number of 100 line classes vs time</div>
+        <div class="plot-charts-item-graph plot1"></div>
+      </div>
+      <div class="plot-charts-item">
+        <div class="plot-charts-item-caption">Number of 5 line methods vs time</div>
+        <div class="plot-charts-item-graph plot2"></div>
+      </div>
+      <div class="clearfix"></div>
+      <div class="plot-charts-item">
+        <div class="plot-charts-item-caption">Number of methods calls with 4 params vs time</div>
+        <div class="plot-charts-item-graph plot3"></div>
+      </div>
+      <div class="plot-charts-item">
+        <div class="plot-charts-item-caption">Number of controllers with 1 instance variable vs time</div>
+        <div class="plot-charts-item-graph plot4"></div>
+      </div>
+      <div class="clearfix"></div>
+    </section>
+    <section class="details js-details js-tab-item">
+      <h2>Methods with 5+ lines</h2>
+<table class="details-stats">
+  <thead>
+    <tr>
+<th class="" title="">Class name</th>
+<th class="" title="">Method name</th>
+<th class="" title="">Size</th>
+<th class="" title="">Path</th>
+</tr>
+
+  </thead>
+  <tbody>
+    <tr>
+<td class="" title=""></td>
+<td class="" title="">helper_find_numeric</td>
+<td class="" title="">13</td>
+<td class="" title="">app/lib/helper_functions.rb</td>
+</tr>
+<tr>
+<td class="" title="">Game</td>
+<td class="" title="">game</td>
+<td class="" title="">11</td>
+<td class="" title="">app/lib/game.rb</td>
+</tr>
+<tr>
+<td class="" title="">Character</td>
+<td class="" title="">calculate_movement</td>
+<td class="" title="">9</td>
+<td class="" title="">app/lib/character.rb</td>
+</tr>
+<tr>
+<td class="" title="">Game</td>
+<td class="" title="">capture_direction</td>
+<td class="" title="">8</td>
+<td class="" title="">app/lib/game.rb</td>
+</tr>
+<tr>
+<td class="" title="">Board</td>
+<td class="" title="">print_b</td>
+<td class="" title="">8</td>
+<td class="" title="">app/lib/board.rb</td>
+</tr>
+<tr>
+<td class="" title="">Ghost</td>
+<td class="" title="">calculate_movement</td>
+<td class="" title="">7</td>
+<td class="" title="">app/lib/ghost.rb</td>
+</tr>
+<tr>
+<td class="" title="">Game</td>
+<td class="" title="">initialize</td>
+<td class="" title="">7</td>
+<td class="" title="">app/lib/game.rb</td>
+</tr>
+<tr>
+<td class="" title="">Game</td>
+<td class="" title="">ghost_appear</td>
+<td class="" title="">6</td>
+<td class="" title="">app/lib/game.rb</td>
+</tr>
+<tr>
+<td class="" title="">Board</td>
+<td class="" title="">initialize</td>
+<td class="" title="">6</td>
+<td class="" title="">app/lib/board.rb</td>
+</tr>
+
+  </tbody>
+</table>
+<div class="hint">NOTE: Red methods are misindented. Continue your way to perfect code by fixing them.</div>
+    </section>
+    <section class="charts-percentage js-charts-percentage js-tab-item">
+    </section>
+    <section class="progress js-progress js-tab-item">
+      <div class="plot-charts-item">
+        <div class="plot-charts-item-caption">Overall progress</div>
+        <div class="plot-charts-item-graph plot"></div>
+        <div class="clearfix"></div>
+      </div>
+    </section>
+    <footer class="main-footer">
+      Scanned with love by <a href="https://github.com/makaroni4/sandi_meter">sandi_meter</a> gem.
+      Please, <a href="https://github.com/makaroni4/sandi_meter/issues/new">leave an issue</a> or
+      <a href="mailto:makaroni4@gmail.com">email</a> some feedback!
+    </footer>
+  </div>
+</body>
+</html>

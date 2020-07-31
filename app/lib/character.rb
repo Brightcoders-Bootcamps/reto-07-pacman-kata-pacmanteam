@@ -6,11 +6,11 @@
 
 # [1 => 'izq', 2 => 'der', 3 => 'arr', 4 => 'abj']
 class Character
-  attr_accessor :position, :velocity, :direction
+  attr_accessor :position, :direction
   attr_reader :board, :character
   
   def initialize(args)
-    @board = args
+    @board = args.clone
     @position = {x: 0, y: 0}
     @velocity = 1
     @direction = 0
