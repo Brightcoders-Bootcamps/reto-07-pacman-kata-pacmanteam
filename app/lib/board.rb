@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'helper_functions'
+require_relative 'helper_open_stream'
 
 # This class most be 
 #   - Print the board
@@ -11,43 +11,39 @@ require_relative 'helper_functions'
 # ● -> power
 # ■ -> wall
 class Board
-  attr_reader :board, :board_numeric, :ghosts, :pacman
+  attr :board, :board_numeric
 
   def initialize(file)
-    @pacman = nil
-    @ghosts = nil
     @board = Array.new() 
     @board_numeric = Array.new()
     steam = File.open(file)
-    open_file(steam.to_a)
+    open_file(steam.to_a, @board, @board_numeric)
   end
 
-  def print_b
+  def print_b(ghosts, pacman)
+    system("clear")
     @board.each_with_index do |ren, index_i|
       ren.each_with_index do |cols, index_j|
-        @ghosts.map{ |ghost| cols = helper_print_b_character(ghost, cols, [index_i, index_j]) }
-        cols = helper_print_b_character(@pacman, cols, [index_i, index_j])
+        ghosts.map{ |ghost| cols = helper_print_b_character(ghost, cols, [index_i, index_j]) }
+        cols = helper_print_b_character(pacman, cols, [index_i, index_j])
         print cols
       end
       print "\n\r"
     end
   end
 
-  private  
-
-  def open_file(stream)
-    stream.each_with_index do |element, pointer|
-      @board_numeric << Array.new()
-      @board << Array.new()
-      convert_file_stream(element, pointer)
-    end
+  def can_move?(ren, col, condition)
+    return (@board_numeric[ren][col] > condition) ? true : false 
   end
 
-  def convert_file_stream(element, pointer)
-    (0..element.size - 2).each do |elem|
-      charac = element[elem]
-      @board[pointer] << charac
-      @board_numeric[pointer] << helper_find_numeric(charac, 0)
+  def calculate_points(pacman)
+    pac_x, pac_y = pacman[:x], pacman[:y]
+    if can_move?(pac_x, pac_y, 2)
+      @board[pac_x][pac_y] = " "
+      @board_numeric[pac_x][pac_y] = 2
+      return 1
     end
+    return 0
   end
+
 end

@@ -1,19 +1,18 @@
 # frozen_string_literal: true
-
-require_relative "character"
-require_relative "helper_functions"
+require_relative "helper_exahustive_search_algorithm"
 
 # This class calculate the movements for the ghosts
 # - This class will be calculate the movements automatically
 
 # [1 => 'izq', 2 => 'der', 3 => 'arr', 4 => 'abj']
 
-class Ghost < Character
-  attr :path
+class Ghost
+  
+  attr_reader :board, :character, :position, :direction, :path
+
   def initialize(args)
-    super(args)
-    @position[:x] = 7
-    @position[:y] = 22
+    @board = args.clone
+    @position = {:x => 7, :y => 22}
     @character = "∏"
     @path = Array.new
   end
@@ -37,51 +36,13 @@ class Ghost < Character
 #	end
 
   def calculate_movement(pacman_position)
-    if @path.size == 0
-      @path = exaustive_search(pacman_position, @position)
-      @path = @path[0..20]
+    unless @path.delete_at(0)
+      @path = exaustive_search(pacman_position, @position, @board)
     else
       @position = @path[0]
-      @path.delete_at(0)
     end
   end
 
-  private 
-
-  def exaustive_search(goal, position)
-    # => This method is a A* algorith
-    # => The array contais [ [position], [posibilities]]
-    # => Posibilities can be [1,2,3,4]
-    # => 0 => Dont move
-    # => 1 => up
-    # => 2 => down
-    # => 3 => right 
-    # => 4 => left
-    # if return in array, delete a posibilities
-    posibilities = Array.new
-    movements = [position.clone]
-    flag = false
-    loop do
-      unless flag
-        ren, col = movements.last[:x], movements.last[:y]
-        posibilities << { :x => ren - 1, :y => col } if can_move?(ren - 1, col, 0)
-        posibilities << { :x => ren + 1, :y => col } if can_move?(ren + 1, col, 0)
-        posibilities << { :x => ren, :y => col + 1 } if can_move?(ren, col + 1, 0)
-        posibilities << { :x => ren, :y => col - 1 } if can_move?(ren, col - 1, 0)
-      end
-
-      posibility = posibilities.pop
-      flag = movements.include?(posibility)
-      posibilities.delete(posibility)
-      (movements << posibility.clone) unless movements.include?(posibility)
-
-      next if flag
-      break if posibilities.size < 2
-      break if posibility == goal
-      break if movements.size > 100
-    end
-    return movements
-  end
 end
 # ghost characters 
 # ∏∩
