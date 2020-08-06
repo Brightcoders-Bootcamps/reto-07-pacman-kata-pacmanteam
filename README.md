@@ -1,4 +1,4 @@
-![Failed](badges/failed_badge.svg)
+![Failed](badges/passed_badge.svg)
 [![SandiMeter](badges/sandimeter_badge.svg)](coverage/sandimeter.png)
 ![RubyCriticBadge](badges/rubycritic_badge_score.svg)
 ![BrightCoders Logo](img/logo-bc.png)
