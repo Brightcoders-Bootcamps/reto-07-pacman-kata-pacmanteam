@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'helper_open_stream'
-
 # This class most be 
 #   - Print the board
 #   - Send data to pacman and ghosts to calculate the next movement
@@ -13,23 +11,12 @@ require_relative 'helper_open_stream'
 class Board
   attr :board, :board_numeric
 
-  def initialize(file)
+  def initialize
     @board = Array.new() 
     @board_numeric = Array.new()
-    steam = File.open(file)
-    open_file(steam.to_a, @board, @board_numeric)
-  end
-
-  def print_b(ghosts, pacman)
-    system("clear")
-    @board.each_with_index do |ren, index_i|
-      ren.each_with_index do |cols, index_j|
-        ghosts.map{ |ghost| cols = helper_print_b_character(ghost, cols, [index_i, index_j]) }
-        cols = helper_print_b_character(pacman, cols, [index_i, index_j])
-        print cols
-      end
-      print "\n\r"
-    end
+    stream = File.open(ENV["PWD"] + "/app/stage1.txt").to_a
+    @board = stream.map{ |element| element.split(//) }
+    @board_numeric = @board.map { |element| element.map{ |element| helper_find_numeric(element, 0) }}
   end
 
   def can_move?(ren, col, condition)

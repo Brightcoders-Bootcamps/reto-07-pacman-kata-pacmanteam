@@ -1,5 +1,7 @@
 # frozen_string_literal: true
-require_relative "helper_functions"
+
+
+
 # This class will be capture the commands for movement from the user
 # - Most be contains a function to capture the commands from the user
 # - Calculate the movement for pacman
@@ -7,25 +9,19 @@ require_relative "helper_functions"
 # [1 => 'izq', 2 => 'der', 3 => 'arr', 4 => 'abj']
 # pacman characters
 # <>∨∧
-class Pacman
+class Pacman < Character
 
-  attr_accessor :direction
-  attr_reader :board, :character, :position
-
-  def initialize(args)
-    @board = args.clone
+  def initialize(args, posibilities)
+    super(args, posibilities)
     @direction = 1
     @position = {x: 14, y: 4}
     @character = "<"
+    @characters = ['∨', '∧', '<', '>']
   end
 
   def calculate_movement
-    case @direction
-    when 1 then @position[:x] += check_ren('∨', - 1)
-    when 2 then @position[:x] += check_ren('∧', + 1)
-    when 3 then @position[:y] += check_col('<', + 1)
-    when 4 then @position[:y] += check_col('>', - 1)
-    end
+    elem = @direction - 1
+    @position, @character = check_element(@characters[elem], @posibilities[elem])
   end
 
   def capture_direction
@@ -36,17 +32,10 @@ class Pacman
     return ((capture_value == "\r") || (capture_value == "\n")) ? nil : capture_direction
   end
 
-  private
-
-  def check_ren(charac, val)
-    ren, col = @position[:x], @position[:y]
-    @character = (charac == @character) ? '|' : charac
-    return board.can_move?(ren + val, col, 1) ? val : 0
-  end
-
-  def check_col(charac, val)
-    ren, col = @position[:x], @position[:y]
-    @character = (charac == @character) ? '-' : charac
-    return board.can_move?(ren, col + val, 1) ? val : 0
+  private 
+  def check_element(charac, sum)
+    ren, col, caracter = @position[:x] + sum[:x], @position[:y] + sum[:y]
+    character = (charac == @character) ? '-' : charac
+    return board.can_move?(ren, col, 1) ? { :x => ren, :y => col} : @position, character
   end
 end

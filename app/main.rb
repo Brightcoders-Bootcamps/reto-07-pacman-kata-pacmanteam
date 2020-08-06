@@ -13,11 +13,14 @@
 require 'timeout'
 require_relative "lib/game"
 
-game = Game.new(ENV["PWD"] + "/app/stage1_test.txt")
+game = Game.new
 
 ghosts = Thread.new { game.ghost_appear }
 capture = Thread.new { game.pacman.capture_direction }
-board = Thread.new {game.game}
+board = Thread.new {
+	game.game
+	print "game over\n\rpress start to continue.."
+}
 
 gets.chomp
 
