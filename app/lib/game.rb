@@ -1,10 +1,5 @@
 # frozen_string_literal: true
-require "io/console"
-require_relative "character"
-require_relative "pacman"
-require_relative "ghost"
-require_relative "board"
-require_relative "helper_game"
+
 # This class is a core
 # - Contains pacman, ghost and board
 # - Send the data from board to ghost and pacman
@@ -37,12 +32,21 @@ class Game
     level = 1
     velocity = 0.5
     loop do
-      level, velocity, @board = level_up(level, velocity, @board)
-      break if character_behavior(@pacman, @ghosts)
+      level, velocity, @board = level_up(level, velocity)
+      @pacman.calculate_movement
+      @ghosts.map { |ghost| ghost.calculate_movement(@pacman.position)}
       print_b(@ghosts, @pacman, @board.board)
       points += @board.calculate_points(@pacman.position)
       print "Points: #{points}, level: #{level}\n\rpress enter to exit...\n\r"
       sleep(velocity)
     end
+  end
+
+  private
+  def level_up(level, velocity)
+    flag = false
+    @board.board_numeric.map { |element| (flag = true) if (element.include?(3) || element.include?(4)) }
+    (return level + 1, velocity - 0.02, Board.new) unless flag
+    return level, velocity, @board
   end
 end

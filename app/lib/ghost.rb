@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "search"
-
 # This class calculate the movements for the ghosts
 # - This class will be calculate the movements automatically
 

@@ -14,7 +14,7 @@ class Board
   def initialize
     @board = Array.new() 
     @board_numeric = Array.new()
-    stream = File.open(ENV["PWD"] + "/app/stage1.txt").to_a
+    stream = File.open(ENV["PWD"] + "/app/stage1_test.txt").to_a
     @board = stream.map{ |element| element.split(//) }
     @board_numeric = @board.map { |element| element.map{ |element| helper_find_numeric(element, 0) }}
   end
@@ -32,5 +32,4 @@ class Board
     end
     return 0
   end
-
 end
